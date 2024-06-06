@@ -1,0 +1,142 @@
+#Utilizando MYSQL crea una base de datos que se llame my_company_database. La base de datos deberá contener la siguiente tabla:
+employees. A su vez tendrá los siguientes campos:   
+id
+birth_date  
+first_name
+last_name   
+gender#
+
+-- Paso 1: Conectar a MySQL (Ejecutar en la terminal de tu sistema operativo)
+mysql -u tu_usuario -p
+
+-- Paso 2: Crear la base de datos
+CREATE DATABASE my_company_database;
+
+-- Paso 3: Seleccionar la base de datos
+USE my_company_database;
+
+-- Paso 4: Crear la tabla employees
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    birth_date DATE,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    gender ENUM('M', 'F')
+);
+
+
+
+
+#1.1.2 Añade columnas nuevas a la tabla creada
+Añade 3 columnas nuevas a la tabla:
+Columna "salary"
+Columna "title"
+Columna "title_date"(fecha)#
+
+-- Añadir columna 'salary'
+ALTER TABLE employees
+ADD COLUMN salary DECIMAL(10, 2);
+
+-- Añadir columna 'title'
+ALTER TABLE employees
+ADD COLUMN title VARCHAR(100);
+
+-- Añadir columna 'title_date'
+ALTER TABLE employees
+ADD COLUMN title_date DATE;
+
+
+1.2. Ejecute las siguientes consultas SQL
+
+A continuación, deberá realizar las siguientes consultas SQL:
+
+#1.2.1 INSERTAR DATOS
+
+Inserte al menos 15 nuevos empleados:
+Al menos 3 empleados deben tener el mismo nombre.
+Los salarios de los empleados deben oscilar en un rango de
+5000 y 50.000 y deben variar entre diferentes géneros.
+Todos los empleados tienen un título.
+Al menos 5 títulos son de 2020.#
+
+-- Insertar nuevos empleados
+INSERT INTO employees (birth_date, first_name, last_name, gender, salary, title, title_date) VALUES
+('1985-04-23', 'John', 'Doe', 'M', 30000, 'Manager', '2019-03-15'),
+('1990-06-12', 'Jane', 'Smith', 'F', 45000, 'Engineer', '2020-06-01'),
+('1988-11-30', 'John', 'Adams', 'M', 25000, 'Technician', '2021-08-20'),
+('1992-09-15', 'Emily', 'Johnson', 'F', 35000, 'Analyst', '2020-07-15'),
+('1980-01-19', 'Robert', 'Brown', 'M', 28000, 'Clerk', '2020-05-10'),
+('1995-02-24', 'Mary', 'Davis', 'F', 32000, 'Specialist', '2022-09-22'),
+('1986-07-17', 'John', 'White', 'M', 22000, 'Supervisor', '2018-11-12'),
+('1982-12-22', 'Patricia', 'Garcia', 'F', 42000, 'Consultant', '2020-02-25'),
+('1993-05-30', 'Linda', 'Martinez', 'F', 27000, 'Coordinator', '2023-01-03'),
+('1989-04-04', 'Michael', 'Robinson', 'M', 5000, 'Developer', '2021-03-11'),
+('1978-11-11', 'Barbara', 'Clark', 'F', 45000, 'Executive', '2020-10-14'),
+('1991-08-23', 'William', 'Rodriguez', 'M', 30000, 'Officer', '2022-07-17'),
+('1983-06-02', 'Elizabeth', 'Lewis', 'F', 15000, 'Administrator', '2017-04-05'),
+('1979-10-25', 'James', 'Lee', 'M', 48000, 'Director', '2021-09-09'),
+('1987-03-14', 'Jennifer', 'Walker', 'F', 50000, 'Assistant', '2020-12-30');
+
+
+
+#1.2.2 ACTUALIZAR DATOS
+
+⦁ Actualizar a los empleados:
+*Si lo hacemos desde la terminal seguid el enunciado tal cual, si lo estáis haciendo con workbench actualizadlo por (primary_key)es decir el valor único y en este caso será el id.
+⦁ Cambiar el nombre de un empleado. Para ello, genere una consulta que afecte solo a un determinado empleado en función de su nombre, apellido y fecha de nacimiento.#
+
+-- Actualizar el nombre de un empleado específico
+UPDATE employees
+SET first_name = 'Jonathan'
+WHERE first_name = 'John' AND last_name = 'Adams' AND birth_date = '1988-11-30';
+
+
+
+#1.2.3 OBTENER DATOS
+
+⦁ Seleccione todos los empleados con un salario superior a 20.000
+⦁ Seleccione todos los empleados con un salario inferior a 10.000
+⦁ Seleccione todos los empleados que tengan un salario entre 14.000 y 50.000
+⦁ Seleccione el número total de empleados
+⦁ Selecciona los títulos del año 2019
+⦁ Seleccione solo el nombre de los empleados y que se vean en mayúsculas
+⦁ Seleccionar el nombre de los empleados sin que se repita ninguno#
+
+USE my_company_database;
+
+SELECT * FROM employees
+WHERE salary > 20000;
+
+SELECT * FROM employees
+WHERE salary < 10000;
+
+SELECT * FROM employees
+WHERE salary BETWEEN 14000 AND 50000;
+
+SELECT COUNT(*) AS total_employees FROM employees;
+
+SELECT title FROM employees
+WHERE YEAR(title_date) = 2019;
+
+SELECT UPPER(first_name) AS first_name_upper FROM employees;
+
+SELECT DISTINCT first_name FROM employees;
+
+
+
+
+#1.2.4 BORRAR DATOS
+
+⦁ Elimina el empleado con id = 5
+*Si lo hacemos desde la terminal seguid el enunciado tal cual, si lo estáis haciendo con workbench actualizadlo por (primary_key)es decir el valor único y en este caso será el id.
+⦁ Eliminar a todos los empleados con un salario superior a 20.000#
+
+DELETE FROM employees
+WHERE id = 5;
+
+DELETE FROM employees
+WHERE salary > 20000;
+
+
+
+
